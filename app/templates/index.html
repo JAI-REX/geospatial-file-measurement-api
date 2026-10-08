@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Upload KML and Shapefile archives and calculate safe geospatial measurements.">
+    <title>GeoMeasure | Geospatial File Measurement</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-icon">G</div>
+        <div><h1>GeoMeasure</h1><span>Geospatial File Measurement API</span></div>
+    </div>
+    <a href="/docs" target="_blank" class="docs-btn">API Docs ↗</a>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <div>
+            <p class="eyebrow">GEOSPATIAL ANALYTICS</p>
+            <h2>Measure your<br><span>geospatial data.</span></h2>
+            <p class="hero-description">Upload a KML file or a ZIP containing a Shapefile. GeoMeasure extracts features and calculates CRS-safe measurements.</p>
+        </div>
+        <div class="hero-card">
+            <div class="hero-stat"><strong>Polygon</strong><span>Area · m²</span></div>
+            <div class="hero-stat"><strong>LineString</strong><span>Length · m</span></div>
+            <div class="hero-stat"><strong>Point</strong><span>No measurement</span></div>
+        </div>
+    </section>
+
+    <section class="upload-section">
+        <div class="section-heading">
+            <div><p class="eyebrow">STEP 01</p><h3>Upload geospatial file</h3></div>
+            <span class="format-badge">KML / ZIP</span>
+        </div>
+        <div id="dropZone" class="drop-zone">
+            <div class="upload-icon">↑</div>
+            <h4>Drag &amp; drop your file here</h4>
+            <p>or choose a file from your computer</p>
+            <label for="fileInput" class="choose-btn">Choose File</label>
+            <input type="file" id="fileInput" accept=".kml,.zip" hidden>
+            <div class="supported">Maximum size: 50 MB · Supported: <strong>.kml</strong> and <strong>.zip</strong> Shapefile archives</div>
+        </div>
+        <div id="selectedFile" class="selected-file hidden">
+            <div class="file-left"><div class="file-icon">FILE</div><div><strong id="fileName"></strong><span id="fileSize"></span></div></div>
+            <button id="removeFile" class="remove-btn">Remove</button>
+        </div>
+        <button id="uploadBtn" class="upload-btn" disabled>Process File</button>
+        <div id="statusBox" class="status-box hidden"><div class="spinner"></div><span id="statusText">Processing file...</span></div>
+    </section>
+
+    <section id="resultsSection" class="results-section hidden">
+        <div class="section-heading">
+            <div><p class="eyebrow">STEP 02</p><h3>Processing results</h3></div>
+            <span id="statusBadge" class="status-badge">COMPLETED</span>
+        </div>
+        <div class="info-grid">
+            <div class="info-card"><span>FILE NAME</span><strong id="resultFilename">—</strong></div>
+            <div class="info-card"><span>FEATURES</span><strong id="featureCount">—</strong></div>
+            <div class="info-card"><span>SOURCE CRS</span><strong id="resultCrs">—</strong></div>
+            <div class="info-card"><span>MEASUREMENT CRS</span><strong id="measurementCrs">—</strong></div>
+        </div>
+        <div class="measurements-card">
+            <div class="measurements-header"><div><p class="eyebrow">FEATURE DATA</p><h3>Measurements</h3></div><span id="measurementCount">0 features</span></div>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>#</th><th>Geometry</th><th>Measurement</th><th>Value</th><th>Properties</th></tr></thead>
+                    <tbody id="measurementsBody"></tbody>
+                </table>
+            </div>
+            <div id="emptyMeasurements" class="empty-state hidden">No measurement data available.</div>
+        </div>
+    </section>
+    <div id="errorBox" class="error-box hidden"><strong>Error</strong><span id="errorText"></span></div>
+</main>
+<footer><span>GeoMeasure</span><span>FastAPI · GeoPandas · Shapely · PyProj</span></footer>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
